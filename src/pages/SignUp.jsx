@@ -12,6 +12,7 @@ import {
 import { db } from '../firebase';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -51,8 +52,11 @@ const SignUp = () => {
             formDataCopy.timestamp = serverTimestamp();
 
             await setDoc(doc(db, 'users', user.uid), formDataCopy);
+            toast.success('Sign up was successful');
             navigate('/');
-        } catch (error) {}
+        } catch (error) {
+            toast.error('Something went wrong the registration');
+        }
     }
 
     return (
